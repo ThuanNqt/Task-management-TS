@@ -3,6 +3,7 @@
     "target": "ES6",
     "module": "CommonJS",
     "removeComments": true,
-    "esModuleInterop": true // using Import replace Require
+    "esModuleInterop": true, // using Import replace Require
+    "outDir": "dist"
   }
 }
