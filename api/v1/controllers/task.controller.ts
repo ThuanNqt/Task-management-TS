@@ -57,3 +57,25 @@ export const detail = async (req: Request, res: Response): Promise<void> => {
   const task = await Task.findOne({ _id: id, deleted: false });
   res.json(task);
 };
+
+export const changeStatus = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const id: string = req.params.id;
+    const status: string = req.body.status;
+
+    await Task.updateOne({ _id: id }, { status: status });
+
+    res.json({
+      code: 200,
+      message: "Status update successful!",
+    });
+  } catch (error) {
+    res.json({
+      code: 400,
+      message: "Not found!",
+    });
+  }
+};
