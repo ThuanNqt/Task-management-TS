@@ -133,3 +133,20 @@ export const changeMulti = async (
     });
   }
 };
+
+export const create = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const task = new Task(req.body);
+    const data = await task.save();
+    res.json({
+      code: 200,
+      message: "Create successful!",
+      data: data,
+    });
+  } catch (error) {
+    res.json({
+      code: 400,
+      message: "Create fail!",
+    });
+  }
+};
