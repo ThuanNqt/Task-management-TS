@@ -75,3 +75,24 @@ export const login = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const detail = async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id;
+    const user = await User.findOne({
+      _id: id,
+      deleted: false,
+    }).select("-password -token");
+
+    res.json({
+      code: 200,
+      message: "Get info successful!",
+      data: user,
+    });
+  } catch (error) {
+    res.json({
+      code: 400,
+      message: "Get info failed!",
+    });
+  }
+};

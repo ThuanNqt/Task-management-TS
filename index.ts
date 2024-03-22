@@ -9,7 +9,7 @@ const app: Express = express();
 const port: number | string = process.env.PORT || 3000;
 
 // cors
-app.use(cors);
+//app.use(cors);
 
 // parse application/json
 app.use(bodyParser.json());
