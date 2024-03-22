@@ -79,3 +79,57 @@ export const changeStatus = async (
     });
   }
 };
+
+export const changeMulti = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    interface ObjectChangeMulti {
+      ids: string[];
+      key: string;
+      value?: string;
+    }
+
+    const objectChangeMulti: ObjectChangeMulti = {
+      ids: req.body.ids,
+      key: req.body.key,
+    };
+
+    if (req.body.value) {
+      objectChangeMulti.value = req.body.value;
+    }
+
+    console.log(objectChangeMulti);
+    enum Key {
+      STATUS = "status",
+      DELETE = "delete",
+    }
+
+    switch (objectChangeMulti.key) {
+      case Key.STATUS:
+        await Task.updateMany(
+          { _id: { $in: objectChangeMulti.ids } },
+          { status: objectChangeMulti.value }
+        );
+        break;
+
+      case Key.DELETE:
+        await Task.updateMany(
+          { _id: { $in: objectChangeMulti.ids } },
+          { deleted: true }
+        );
+        break;
+    }
+
+    res.json({
+      code: 200,
+      message: "Update successful!",
+    });
+  } catch (error) {
+    res.json({
+      code: 400,
+      message: "Not found!",
+    });
+  }
+};
