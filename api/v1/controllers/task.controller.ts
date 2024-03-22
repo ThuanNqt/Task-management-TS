@@ -150,3 +150,35 @@ export const create = async (req: Request, res: Response): Promise<void> => {
     });
   }
 };
+
+export const edit = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const id: string = req.params.id;
+    await Task.updateOne({ _id: id }, req.body);
+    res.json({
+      code: 200,
+      message: "Update successful!",
+    });
+  } catch (error) {
+    res.json({
+      code: 400,
+      message: "Update fail!",
+    });
+  }
+};
+
+export const deleteTask = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    await Task.updateOne({ _id: id }, { deleted: true, deletedAt: new Date() });
+    res.json({
+      code: 200,
+      message: "Delete successful",
+    });
+  } catch (error) {
+    res.json({
+      code: 400,
+      message: "Delete fail!",
+    });
+  }
+};
